@@ -29,6 +29,14 @@ class UpdateBeerStyleUseCase {
       throw new AppError("This beer style doesn't exists!", 404);
     }
 
+    const findBeerStyleByName = await this.beerStylesRepository.findByName(
+      String(name)
+    );
+
+    if (findBeerStyleByName && beerStyleExists.id !== findBeerStyleByName.id) {
+      throw new AppError("This beer style name already exists!");
+    }
+
     const updatedBeerStyle = await this.beerStylesRepository.update({
       id,
       name: name || beerStyleExists.name,
