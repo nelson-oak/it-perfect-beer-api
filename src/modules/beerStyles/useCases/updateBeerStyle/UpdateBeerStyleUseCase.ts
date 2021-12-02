@@ -33,13 +33,11 @@ class UpdateBeerStyleUseCase {
       id,
       name: name || beerStyleExists.name,
       minimum_temperature:
-        (!minimum_temperature && minimum_temperature !== 0) ||
-        Number.isNaN(Number(minimum_temperature))
+        !minimum_temperature && minimum_temperature !== 0
           ? beerStyleExists.minimum_temperature
           : minimum_temperature,
       maximum_temperature:
-        (!minimum_temperature && minimum_temperature !== 0) ||
-        Number.isNaN(Number(minimum_temperature))
+        !minimum_temperature && minimum_temperature !== 0
           ? beerStyleExists.maximum_temperature
           : maximum_temperature,
     });

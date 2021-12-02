@@ -17,7 +17,12 @@ class CreateBeerStyleUseCase {
   ) {}
 
   async execute({ name, minimum_temperature, maximum_temperature }: IRequest) {
-    if (!name || !minimum_temperature || !maximum_temperature) {
+    if (
+      !name ||
+      name.length === 0 ||
+      (!minimum_temperature && minimum_temperature !== 0) ||
+      (!maximum_temperature && maximum_temperature !== 0)
+    ) {
       throw new AppError(
         "Can't create a beer style with nullable name, minimum or maximum temperatures!"
       );

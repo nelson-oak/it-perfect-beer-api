@@ -61,4 +61,8 @@ describe("Update Beer Style Use Case", () => {
     expect(beerStyle.minimum_temperature).toBe(-5);
     expect(beerStyle.maximum_temperature).toBe(5);
   });
+
+  it("should not be able to update the beer style's name to a name of another", async () => {
+    //
+  });
 });
