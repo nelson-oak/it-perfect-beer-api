@@ -20,18 +20,16 @@ class BeerStylesRepository implements IBeerStyleRepository {
     });
   }
 
-  async findByID(id: string): Promise<BeerStyle> {
-    throw new Error("Method not implemented.");
+  async findById(id: string): Promise<BeerStyle> {
+    return this.ormRepository.findOne(id);
   }
 
   async findByName(name: string): Promise<BeerStyle> {
-    const beerStyle = await this.ormRepository.findOne({
+    return this.ormRepository.findOne({
       where: {
         name: Raw((alias) => `LOWER(${alias}) = '${name.toLowerCase()}'`),
       },
     });
-
-    return beerStyle;
   }
 
   async filterByTemperatureRange(temperature: string): Promise<BeerStyle[]> {
