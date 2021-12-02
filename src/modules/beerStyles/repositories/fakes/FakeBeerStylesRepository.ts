@@ -8,7 +8,9 @@ class FakeBeerStylesRepository implements IBeerStyleRepository {
   private beerStyles: BeerStyle[] = [];
 
   async findAll(name?: string): Promise<BeerStyle[]> {
-    return this.beerStyles;
+    return this.beerStyles.filter((beerStyle) =>
+      beerStyle.name.toLowerCase().includes(name.toLowerCase())
+    );
   }
 
   async findByID(id: string): Promise<BeerStyle> {
