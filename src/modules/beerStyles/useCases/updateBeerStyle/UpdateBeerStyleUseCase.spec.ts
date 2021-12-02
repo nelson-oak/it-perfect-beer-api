@@ -82,4 +82,23 @@ describe("Update Beer Style Use Case", () => {
       })
     ).rejects.toEqual(new AppError("This beer style name already exists!"));
   });
+
+  it("should not be able to update the minimum temperature to a value greater than maximum temperature", async () => {
+    const { id: beerStyleId } = await fakeBeerStylesRepository.create({
+      name: "A beer style name",
+      minimum_temperature: -5,
+      maximum_temperature: 5,
+    });
+
+    await expect(
+      updateBeerStyleUseCase.execute({
+        id: beerStyleId,
+        minimum_temperature: 10,
+      })
+    ).rejects.toEqual(
+      new AppError(
+        "Minimum temperature can't be greater than maximum temperature!"
+      )
+    );
+  });
 });
