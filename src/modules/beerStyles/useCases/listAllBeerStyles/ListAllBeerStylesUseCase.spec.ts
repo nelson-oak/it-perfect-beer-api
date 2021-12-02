@@ -37,7 +37,7 @@ describe("List All Beer Styles", () => {
     expect(beerStyles.length).toBe(3);
   });
 
-  it("should be able to list all beer styles with filter by na,e", async () => {
+  it("should be able to list all beer styles filtering by name", async () => {
     await fakeBeerStylesRepository.create({
       name: "filtered beer style 1",
       minimum_temperature: -5,

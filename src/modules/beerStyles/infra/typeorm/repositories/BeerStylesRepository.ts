@@ -27,7 +27,7 @@ class BeerStylesRepository implements IBeerStyleRepository {
   async findByName(name: string): Promise<BeerStyle> {
     const beerStyle = await this.ormRepository.findOne({
       where: {
-        name: Raw((alias) => `LOWER(${alias}) Like '%${name.toLowerCase()}%'`),
+        name: Raw((alias) => `LOWER(${alias}) = '${name.toLowerCase()}'`),
       },
     });
 
