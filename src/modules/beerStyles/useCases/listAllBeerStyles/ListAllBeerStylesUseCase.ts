@@ -13,7 +13,7 @@ class ListAllBeerStylesUseCase {
   ) {}
 
   async execute({ name = "" }: IRequest) {
-    throw new Error("Method not implemented.");
+    return this.beerStylesRepository.findAll(name);
   }
 }
 

@@ -12,7 +12,7 @@ class BeerStylesRepository implements IBeerStyleRepository {
     this.ormRepository = getRepository(BeerStyle);
   }
 
-  async find(): Promise<BeerStyle[]> {
+  async findAll(name?: string): Promise<BeerStyle[]> {
     throw new Error("Method not implemented.");
   }
 
