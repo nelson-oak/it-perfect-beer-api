@@ -41,4 +41,18 @@ describe("Create Beer Style", () => {
       new AppError("A beer style with this name already exists!")
     );
   });
+
+  it("should not be able to create a beer style with minimum temperature greater than maximum temperature", async () => {
+    await expect(
+      createBeerStyleUseCase.execute({
+        name: "a beer style name",
+        minimum_temperature: 5,
+        maximum_temperature: -5,
+      })
+    ).rejects.toEqual(
+      new AppError(
+        "Minimum temperature can't be greater than maximum temperature!"
+      )
+    );
+  });
 });
