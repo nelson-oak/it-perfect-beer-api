@@ -25,7 +25,7 @@ describe("List Beer Style By Id", () => {
     const beerStyle = await listBeerStyleByIdUseCase.execute(beerStyleId);
 
     expect(beerStyle.id).toBe(beerStyleId);
-    expect(beerStyle.name).toBe("a beer style name");
+    expect(beerStyle.name).toEqual("a beer style name");
     expect(beerStyle.minimum_temperature).toBe(-5);
     expect(beerStyle.maximum_temperature).toBe(5);
   });
