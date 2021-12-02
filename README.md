@@ -12,7 +12,7 @@ Teste solicitado pela empresa Be Growth.
 
 ## Funcionalidades
 
-- [ ] CRUD de estilos de cerveja (criar, editar, excluir, listar e importar via CSV)
+- [ ] CRUD de estilos de cerveja (criar, listar, editar, excluir e importar via CSV)
 - [ ] Retornar a cerveja ideal junto com uma playlist do Spotify, dada a temperatura
 - [ ] Se houver mais de uma cerveja retornada, classificar por ordem alfabética
 - [ ] Se não houver playlist do Spotify o status 204 na playlist
