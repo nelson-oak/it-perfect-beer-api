@@ -1,6 +1,8 @@
 import { IBeerStyleRepository } from "@modules/beerStyles/repositories/IBeerStylesRepository";
 import { inject, injectable } from "tsyringe";
 
+import { AppError } from "@shared/errors/AppError";
+
 interface IRequest {
   id: string;
   name?: string;
@@ -21,6 +23,12 @@ class UpdateBeerStyleUseCase {
     minimum_temperature,
     maximum_temperature,
   }: IRequest) {
+    const beerStyleExists = await this.beerStylesRepository.findById(id);
+
+    if (!beerStyleExists) {
+      throw new AppError("This beer style doesn't exists!", 404);
+    }
+
     const updatedBeerStyle = await this.beerStylesRepository.update({
       id,
       name,
