@@ -17,6 +17,12 @@ class CreateBeerStyleUseCase {
   ) {}
 
   async execute({ name, minimum_temperature, maximum_temperature }: IRequest) {
+    if (minimum_temperature > maximum_temperature) {
+      throw new AppError(
+        "Minimum temperature can't be greater than maximum temperature!"
+      );
+    }
+
     const findByName = await this.beerStylesRepository.findByName(name);
 
     if (findByName) {
