@@ -55,4 +55,42 @@ describe("Create Beer Style", () => {
       )
     );
   });
+
+  it("should not be able to create a beer style with nullable values", async () => {
+    await expect(
+      createBeerStyleUseCase.execute({
+        name: null,
+        minimum_temperature: 5,
+        maximum_temperature: -5,
+      })
+    ).rejects.toEqual(
+      new AppError(
+        "Can't create a beer style with nullable name, minimum or maximum temperatures!"
+      )
+    );
+
+    await expect(
+      createBeerStyleUseCase.execute({
+        name: "a beer style name",
+        minimum_temperature: null,
+        maximum_temperature: -5,
+      })
+    ).rejects.toEqual(
+      new AppError(
+        "Can't create a beer style with nullable name, minimum or maximum temperatures!"
+      )
+    );
+
+    await expect(
+      createBeerStyleUseCase.execute({
+        name: "a beer style name",
+        minimum_temperature: 5,
+        maximum_temperature: null,
+      })
+    ).rejects.toEqual(
+      new AppError(
+        "Can't create a beer style with nullable name, minimum or maximum temperatures!"
+      )
+    );
+  });
 });
