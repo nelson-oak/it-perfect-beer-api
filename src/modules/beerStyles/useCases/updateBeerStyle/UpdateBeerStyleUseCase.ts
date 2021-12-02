@@ -37,17 +37,21 @@ class UpdateBeerStyleUseCase {
       throw new AppError("This beer style name already exists!");
     }
 
+    const newName = !name || name.length > 0 ? beerStyleExists.name : name;
+    const newMinimumTemperature =
+      !minimum_temperature && minimum_temperature !== 0
+        ? beerStyleExists.minimum_temperature
+        : minimum_temperature;
+    const newMaximumTemperature =
+      !minimum_temperature && minimum_temperature !== 0
+        ? beerStyleExists.maximum_temperature
+        : maximum_temperature;
+
     const updatedBeerStyle = await this.beerStylesRepository.update({
       id,
-      name: name || beerStyleExists.name,
-      minimum_temperature:
-        !minimum_temperature && minimum_temperature !== 0
-          ? beerStyleExists.minimum_temperature
-          : minimum_temperature,
-      maximum_temperature:
-        !minimum_temperature && minimum_temperature !== 0
-          ? beerStyleExists.maximum_temperature
-          : maximum_temperature,
+      name: newName,
+      minimum_temperature: newMinimumTemperature,
+      maximum_temperature: newMaximumTemperature,
     });
 
     return updatedBeerStyle;
