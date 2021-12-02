@@ -1,7 +1,8 @@
 interface IUpdateBeerStyleDTO {
-  name?: string;
-  minimum_temperature?: number;
-  maximum_temperature?: number;
+  id: string;
+  name: string;
+  minimum_temperature: number;
+  maximum_temperature: number;
 }
 
 export { IUpdateBeerStyleDTO };

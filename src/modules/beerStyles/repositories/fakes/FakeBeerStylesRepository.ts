@@ -19,7 +19,7 @@ class FakeBeerStylesRepository implements IBeerStyleRepository {
 
   async findByName(name: string): Promise<BeerStyle> {
     return this.beerStyles.find(
-      (beerStyle) => name === beerStyle.name.toLowerCase()
+      (beerStyle) => name.toLowerCase() === beerStyle.name.toLowerCase()
     );
   }
 
@@ -47,8 +47,21 @@ class FakeBeerStylesRepository implements IBeerStyleRepository {
     return beerStyle;
   }
 
-  async update(data: IUpdateBeerStyleDTO): Promise<BeerStyle> {
-    throw new Error("Method not implemented.");
+  async update({
+    id,
+    name,
+    minimum_temperature,
+    maximum_temperature,
+  }: IUpdateBeerStyleDTO): Promise<BeerStyle> {
+    const beerStyleIndex = this.beerStyles.findIndex(
+      (beerStyle) => beerStyle.id === id
+    );
+
+    this.beerStyles[beerStyleIndex].name = name;
+    this.beerStyles[beerStyleIndex].minimum_temperature = minimum_temperature;
+    this.beerStyles[beerStyleIndex].maximum_temperature = maximum_temperature;
+
+    return this.beerStyles[beerStyleIndex];
   }
 
   async delete(id: string): Promise<void> {
