@@ -36,4 +36,30 @@ describe("List All Beer Styles", () => {
 
     expect(beerStyles.length).toBe(3);
   });
+
+  it("should be able to list all beer styles with filter by na,e", async () => {
+    await fakeBeerStylesRepository.create({
+      name: "filtered beer style 1",
+      minimum_temperature: -5,
+      maximum_temperature: 5,
+    });
+
+    await fakeBeerStylesRepository.create({
+      name: "a beer style name 2",
+      minimum_temperature: -5,
+      maximum_temperature: 5,
+    });
+
+    await fakeBeerStylesRepository.create({
+      name: "a beer style name 3",
+      minimum_temperature: -5,
+      maximum_temperature: 5,
+    });
+
+    const beerStyles = await listAllBeerStylesUseCase.execute({
+      name: "filtered",
+    });
+
+    expect(beerStyles.length).toBe(1);
+  });
 });
