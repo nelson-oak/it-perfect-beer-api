@@ -1,5 +1,7 @@
 import { FakeBeerStylesRepository } from "@modules/beerStyles/repositories/fakes/FakeBeerStylesRepository";
 
+import { AppError } from "@shared/errors/AppError";
+
 import { ListBeerStyleByIdUseCase } from "./ListBeerStyleByIdUseCase";
 
 let listBeerStyleByIdUseCase: ListBeerStyleByIdUseCase;
@@ -26,5 +28,11 @@ describe("List Beer Style By Id", () => {
     expect(beerStyle.name).toBe("a beer style name");
     expect(beerStyle.minimum_temperature).toBe(-5);
     expect(beerStyle.maximum_temperature).toBe(5);
+  });
+
+  it("should not be able to list one beer style with a non-existent id", async () => {
+    await expect(
+      listBeerStyleByIdUseCase.execute("non-existent-id")
+    ).rejects.toEqual(new AppError("This beer style id doesn't exists!", 404));
   });
 });
