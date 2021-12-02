@@ -31,9 +31,17 @@ class UpdateBeerStyleUseCase {
 
     const updatedBeerStyle = await this.beerStylesRepository.update({
       id,
-      name,
-      minimum_temperature,
-      maximum_temperature,
+      name: name || beerStyleExists.name,
+      minimum_temperature:
+        (!minimum_temperature && minimum_temperature !== 0) ||
+        Number.isNaN(Number(minimum_temperature))
+          ? beerStyleExists.minimum_temperature
+          : minimum_temperature,
+      maximum_temperature:
+        (!minimum_temperature && minimum_temperature !== 0) ||
+        Number.isNaN(Number(minimum_temperature))
+          ? beerStyleExists.maximum_temperature
+          : maximum_temperature,
     });
 
     return updatedBeerStyle;
