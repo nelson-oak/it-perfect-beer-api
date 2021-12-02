@@ -1,7 +1,7 @@
 import { ICreateBeerStyleDTO } from "@modules/beerStyles/dtos/ICreateBeerStyleDTO";
 import { IUpdateBeerStyleDTO } from "@modules/beerStyles/dtos/IUpdateBeerStyleDTO";
 import { IBeerStyleRepository } from "@modules/beerStyles/repositories/IBeerStylesRepository";
-import { getRepository, Repository } from "typeorm";
+import { getRepository, Raw, Repository } from "typeorm";
 
 import { BeerStyle } from "../entities/BeerStyle";
 
@@ -21,7 +21,13 @@ class BeerStylesRepository implements IBeerStyleRepository {
   }
 
   async findByName(name: string): Promise<BeerStyle> {
-    throw new Error("Method not implemented.");
+    const beerStyle = await this.ormRepository.findOne({
+      where: {
+        name: Raw((alias) => `LOWER(${alias}) Like '%${name.toLowerCase()}%'`),
+      },
+    });
+
+    return beerStyle;
   }
 
   async filterByTemperatureRange(temperature: string): Promise<BeerStyle[]> {

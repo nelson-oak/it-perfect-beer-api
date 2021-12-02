@@ -16,7 +16,11 @@ class FakeBeerStylesRepository implements IBeerStyleRepository {
   }
 
   async findByName(name: string): Promise<BeerStyle> {
-    throw new Error("Method not implemented.");
+    const beerStyle = this.beerStyles.find(
+      (beerStyle) => name.toLowerCase() === beerStyle.name.toLowerCase()
+    );
+
+    return beerStyle;
   }
 
   async filterByTemperatureRange(temperature: string): Promise<BeerStyle[]> {
@@ -37,8 +41,6 @@ class FakeBeerStylesRepository implements IBeerStyleRepository {
       created_at: new Date(),
       updated_at: new Date(),
     });
-
-    console.log(beerStyle);
 
     this.beerStyles.push(beerStyle);
 

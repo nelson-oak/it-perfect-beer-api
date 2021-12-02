@@ -1,6 +1,8 @@
 import { IBeerStyleRepository } from "@modules/beerStyles/repositories/IBeerStylesRepository";
 import { inject, injectable } from "tsyringe";
 
+import { AppError } from "@shared/errors/AppError";
+
 interface IRequest {
   name: string;
   minimum_temperature: number;
@@ -15,6 +17,12 @@ class CreateBeerStyleUseCase {
   ) {}
 
   async execute({ name, minimum_temperature, maximum_temperature }: IRequest) {
+    const findByName = await this.beerStylesRepository.findByName(name);
+
+    if (findByName) {
+      throw new AppError("A beer style with this name already exists!");
+    }
+
     const beerStyle = await this.beerStylesRepository.create({
       name,
       minimum_temperature,
