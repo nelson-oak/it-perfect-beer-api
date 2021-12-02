@@ -12,8 +12,12 @@ class BeerStylesRepository implements IBeerStyleRepository {
     this.ormRepository = getRepository(BeerStyle);
   }
 
-  async find(): Promise<BeerStyle[]> {
-    throw new Error("Method not implemented.");
+  async findAll(name = ""): Promise<BeerStyle[]> {
+    return this.ormRepository.find({
+      where: {
+        name: Raw((alias) => `LOWER(${alias}) Like '%${name.toLowerCase()}%'`),
+      },
+    });
   }
 
   async findByID(id: string): Promise<BeerStyle> {
@@ -23,7 +27,7 @@ class BeerStylesRepository implements IBeerStyleRepository {
   async findByName(name: string): Promise<BeerStyle> {
     const beerStyle = await this.ormRepository.findOne({
       where: {
-        name: Raw((alias) => `LOWER(${alias}) Like '%${name.toLowerCase()}%'`),
+        name: Raw((alias) => `LOWER(${alias}) = '${name.toLowerCase()}'`),
       },
     });
 

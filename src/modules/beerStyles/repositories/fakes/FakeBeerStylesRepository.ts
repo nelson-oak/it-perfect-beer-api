@@ -7,8 +7,10 @@ import { IBeerStyleRepository } from "../IBeerStylesRepository";
 class FakeBeerStylesRepository implements IBeerStyleRepository {
   private beerStyles: BeerStyle[] = [];
 
-  async find(): Promise<BeerStyle[]> {
-    throw new Error("Method not implemented.");
+  async findAll(name?: string): Promise<BeerStyle[]> {
+    return this.beerStyles.filter((beerStyle) =>
+      beerStyle.name.toLowerCase().includes(name.toLowerCase())
+    );
   }
 
   async findByID(id: string): Promise<BeerStyle> {
