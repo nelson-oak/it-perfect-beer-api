@@ -37,7 +37,7 @@ class UpdateBeerStyleUseCase {
       throw new AppError("This beer style name already exists!");
     }
 
-    const newName = !name || name.length > 0 ? beerStyleExists.name : name;
+    const newName = !name || name.length === 0 ? beerStyleExists.name : name;
     const newMinimumTemperature =
       !minimum_temperature && minimum_temperature !== 0
         ? beerStyleExists.minimum_temperature
