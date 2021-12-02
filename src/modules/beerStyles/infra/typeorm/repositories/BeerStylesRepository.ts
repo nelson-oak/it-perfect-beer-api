@@ -70,7 +70,7 @@ class BeerStylesRepository implements IBeerStyleRepository {
   }
 
   async delete(id: string): Promise<void> {
-    throw new Error("Method not implemented.");
+    await this.ormRepository.delete(id);
   }
 }
 

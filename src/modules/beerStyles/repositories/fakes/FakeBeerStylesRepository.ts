@@ -65,7 +65,11 @@ class FakeBeerStylesRepository implements IBeerStyleRepository {
   }
 
   async delete(id: string): Promise<void> {
-    throw new Error("Method not implemented.");
+    const beerStyleIndex = this.beerStyles.findIndex(
+      (beerStyle) => beerStyle.id === id
+    );
+
+    this.beerStyles.splice(beerStyleIndex, 1);
   }
 }
 

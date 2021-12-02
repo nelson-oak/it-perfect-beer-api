@@ -9,7 +9,7 @@ class DeleteBeerStyleUseCase {
   ) {}
 
   async execute(id: string) {
-    throw new Error("Method not implemented.");
+    await this.beerStylesRepository.delete(id);
   }
 }
 

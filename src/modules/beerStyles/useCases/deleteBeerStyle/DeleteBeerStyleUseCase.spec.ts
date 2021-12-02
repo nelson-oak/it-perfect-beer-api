@@ -15,7 +15,7 @@ describe("Delete Beer Style", () => {
     );
   });
 
-  it("should be able to delete a Beer Style", async () => {
+  it("should be able to delete a beer style", async () => {
     const { id: beerStyleId } = await fakeBeerStylesRepository.create({
       name: "a beer style name",
       minimum_temperature: -5,
