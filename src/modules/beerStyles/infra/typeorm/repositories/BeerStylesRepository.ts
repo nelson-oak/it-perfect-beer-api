@@ -5,25 +5,31 @@ import { IBeerStyleRepository } from "@modules/beerStyles/repositories/IBeerStyl
 import { BeerStyle } from "../entities/BeerStyle";
 
 class BeerStylesRepository implements IBeerStyleRepository {
-  find(): Promise<BeerStyle[]> {
+  async find(): Promise<BeerStyle[]> {
     throw new Error("Method not implemented.");
   }
-  findByID(id: string): Promise<BeerStyle> {
+
+  async findByID(id: string): Promise<BeerStyle> {
     throw new Error("Method not implemented.");
   }
-  findByName(name: string): Promise<BeerStyle> {
+
+  async findByName(name: string): Promise<BeerStyle> {
     throw new Error("Method not implemented.");
   }
-  filterByTemperatureRange(temperature: string): Promise<BeerStyle[]> {
+
+  async filterByTemperatureRange(temperature: string): Promise<BeerStyle[]> {
     throw new Error("Method not implemented.");
   }
-  create(data: ICreateBeerStyleDTO): Promise<BeerStyle> {
+
+  async create(data: ICreateBeerStyleDTO): Promise<BeerStyle> {
     throw new Error("Method not implemented.");
   }
-  update(data: IUpdateBeerStyleDTO): Promise<BeerStyle> {
+
+  async update(data: IUpdateBeerStyleDTO): Promise<BeerStyle> {
     throw new Error("Method not implemented.");
   }
-  delete(id: string): Promise<void> {
+
+  async delete(id: string): Promise<void> {
     throw new Error("Method not implemented.");
   }
 }

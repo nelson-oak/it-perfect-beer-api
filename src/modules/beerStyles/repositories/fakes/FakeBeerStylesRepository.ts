@@ -5,25 +5,51 @@ import { BeerStyle } from "@modules/beerStyles/infra/typeorm/entities/BeerStyle"
 import { IBeerStyleRepository } from "../IBeerStylesRepository";
 
 class FakeBeerStylesRepository implements IBeerStyleRepository {
-  find(): Promise<BeerStyle[]> {
+  private beerStyles: BeerStyle[] = [];
+
+  async find(): Promise<BeerStyle[]> {
     throw new Error("Method not implemented.");
   }
-  findByID(id: string): Promise<BeerStyle> {
+
+  async findByID(id: string): Promise<BeerStyle> {
     throw new Error("Method not implemented.");
   }
-  findByName(name: string): Promise<BeerStyle> {
+
+  async findByName(name: string): Promise<BeerStyle> {
     throw new Error("Method not implemented.");
   }
-  filterByTemperatureRange(temperature: string): Promise<BeerStyle[]> {
+
+  async filterByTemperatureRange(temperature: string): Promise<BeerStyle[]> {
     throw new Error("Method not implemented.");
   }
-  create(data: ICreateBeerStyleDTO): Promise<BeerStyle> {
+
+  async create({
+    name,
+    minimum_temperature,
+    maximum_temperature,
+  }: ICreateBeerStyleDTO): Promise<BeerStyle> {
+    const beerStyle = new BeerStyle();
+
+    Object.assign(beerStyle, {
+      name,
+      minimum_temperature,
+      maximum_temperature,
+      created_at: new Date(),
+      updated_at: new Date(),
+    });
+
+    console.log(beerStyle);
+
+    this.beerStyles.push(beerStyle);
+
+    return beerStyle;
+  }
+
+  async update(data: IUpdateBeerStyleDTO): Promise<BeerStyle> {
     throw new Error("Method not implemented.");
   }
-  update(data: IUpdateBeerStyleDTO): Promise<BeerStyle> {
-    throw new Error("Method not implemented.");
-  }
-  delete(id: string): Promise<void> {
+
+  async delete(id: string): Promise<void> {
     throw new Error("Method not implemented.");
   }
 }

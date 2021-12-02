@@ -15,7 +15,13 @@ class CreateBeerStyleUseCase {
   ) {}
 
   async execute({ name, minimum_temperature, maximum_temperature }: IRequest) {
-    throw new Error("Method not implemented.");
+    const beerStyle = await this.beerStylesRepository.create({
+      name,
+      minimum_temperature,
+      maximum_temperature,
+    });
+
+    return beerStyle;
   }
 }
 
