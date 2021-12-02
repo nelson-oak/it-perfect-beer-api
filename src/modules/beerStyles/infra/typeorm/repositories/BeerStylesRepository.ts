@@ -52,8 +52,21 @@ class BeerStylesRepository implements IBeerStyleRepository {
     return beerStyle;
   }
 
-  async update(data: IUpdateBeerStyleDTO): Promise<BeerStyle> {
-    throw new Error("Method not implemented.");
+  async update({
+    id,
+    name,
+    minimum_temperature,
+    maximum_temperature,
+  }: IUpdateBeerStyleDTO): Promise<BeerStyle> {
+    const beerStyle = await this.ormRepository.findOne(id);
+
+    beerStyle.name = name;
+    beerStyle.minimum_temperature = minimum_temperature;
+    beerStyle.maximum_temperature = maximum_temperature;
+
+    await this.ormRepository.save(beerStyle);
+
+    return beerStyle;
   }
 
   async delete(id: string): Promise<void> {

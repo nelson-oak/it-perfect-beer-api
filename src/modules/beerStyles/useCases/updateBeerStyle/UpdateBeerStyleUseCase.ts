@@ -21,7 +21,14 @@ class UpdateBeerStyleUseCase {
     minimum_temperature,
     maximum_temperature,
   }: IRequest) {
-    throw new Error("Method not implemented.");
+    const updatedBeerStyle = await this.beerStylesRepository.update({
+      id,
+      name,
+      minimum_temperature,
+      maximum_temperature,
+    });
+
+    return updatedBeerStyle;
   }
 }
 
