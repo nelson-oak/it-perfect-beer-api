@@ -62,4 +62,10 @@ describe("List All Beer Styles", () => {
 
     expect(beerStyles.length).toBe(1);
   });
+
+  it("should return an empty array if there isn't a beer style to show", async () => {
+    const beerStyles = await listAllBeerStylesUseCase.execute({});
+
+    expect(beerStyles).toEqual([]);
+  });
 });
