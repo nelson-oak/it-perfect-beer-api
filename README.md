@@ -7,7 +7,7 @@ Teste solicitado pela empres Be Growth.
 
 | Entidades | Atributos |
 | - | - |
-| beer_style | id, name, minimum_temperature, maximum_temperature |
+| beer_styles | id, name, minimum_temperature, maximum_temperature, created_at, updated_at |
 
 
 ## Funcionalidades
