@@ -43,9 +43,15 @@ class UpdateBeerStyleUseCase {
         ? beerStyleExists.minimum_temperature
         : minimum_temperature;
     const newMaximumTemperature =
-      !minimum_temperature && minimum_temperature !== 0
+      !maximum_temperature && maximum_temperature !== 0
         ? beerStyleExists.maximum_temperature
         : maximum_temperature;
+
+    if (newMinimumTemperature > newMaximumTemperature) {
+      throw new AppError(
+        "Minimum temperature can't be greater than maximum temperature!"
+      );
+    }
 
     const updatedBeerStyle = await this.beerStylesRepository.update({
       id,
