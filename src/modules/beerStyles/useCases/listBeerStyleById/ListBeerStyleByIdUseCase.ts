@@ -9,7 +9,9 @@ class ListBeerStyleByIdUseCase {
   ) {}
 
   async execute(id: string) {
-    throw new Error("Method not implemented.");
+    const beerStyle = await this.beerStylesRepository.findById(id);
+
+    return beerStyle;
   }
 }
 

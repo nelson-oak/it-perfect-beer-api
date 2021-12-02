@@ -13,13 +13,13 @@ class FakeBeerStylesRepository implements IBeerStyleRepository {
     );
   }
 
-  async findByID(id: string): Promise<BeerStyle> {
-    throw new Error("Method not implemented.");
+  async findById(id: string): Promise<BeerStyle> {
+    return this.beerStyles.find((beerStyle) => id === beerStyle.id);
   }
 
   async findByName(name: string): Promise<BeerStyle> {
     const beerStyle = this.beerStyles.find(
-      (beerStyle) => name.toLowerCase() === beerStyle.name.toLowerCase()
+      (beerStyle) => name === beerStyle.name.toLowerCase()
     );
 
     return beerStyle;
