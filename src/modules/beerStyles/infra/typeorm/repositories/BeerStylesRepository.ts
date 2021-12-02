@@ -25,13 +25,11 @@ class BeerStylesRepository implements IBeerStyleRepository {
   }
 
   async findByName(name: string): Promise<BeerStyle> {
-    const beerStyle = await this.ormRepository.findOne({
+    return this.ormRepository.findOne({
       where: {
         name: Raw((alias) => `LOWER(${alias}) = '${name.toLowerCase()}'`),
       },
     });
-
-    return beerStyle;
   }
 
   async filterByTemperatureRange(temperature: string): Promise<BeerStyle[]> {

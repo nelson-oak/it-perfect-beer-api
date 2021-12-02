@@ -18,11 +18,9 @@ class FakeBeerStylesRepository implements IBeerStyleRepository {
   }
 
   async findByName(name: string): Promise<BeerStyle> {
-    const beerStyle = this.beerStyles.find(
+    return this.beerStyles.find(
       (beerStyle) => name === beerStyle.name.toLowerCase()
     );
-
-    return beerStyle;
   }
 
   async filterByTemperatureRange(temperature: string): Promise<BeerStyle[]> {
