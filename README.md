@@ -1,7 +1,7 @@
 # Perfect Beer API
 
 API desenvolvida para definir qual é a cerveja perfeita, de acordo com a temperatura.
-Teste solicitado pela empres Be Growth.
+Teste solicitado pela empresa Be Growth.
 
 ## Entidades
 
@@ -21,10 +21,16 @@ Teste solicitado pela empres Be Growth.
 
 Após clonar o projeto, é necessário atualizar as dependências.
 
-### Comandos para atualizar e executar a aplicação
+### Comandos de execução
 
 ```bash
+# Baixar dependências Javascript
 yarn
+
+# Executar as migrations (lembrar de criar o ORM Config conforme instruções em "Configurações adicionais")
+yarn typeorm migration:run
+
+# Executar a aplicação
 yarn dev:server
 ```
 
