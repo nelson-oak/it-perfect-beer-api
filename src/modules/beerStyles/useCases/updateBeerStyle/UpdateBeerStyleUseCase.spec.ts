@@ -63,6 +63,23 @@ describe("Update Beer Style Use Case", () => {
   });
 
   it("should not be able to update the beer style's name to a name of another", async () => {
-    //
+    const { id: beerStyleId } = await fakeBeerStylesRepository.create({
+      name: "A beer style name",
+      minimum_temperature: -5,
+      maximum_temperature: 5,
+    });
+
+    await fakeBeerStylesRepository.create({
+      name: "Another beer style name",
+      minimum_temperature: -5,
+      maximum_temperature: 5,
+    });
+
+    await expect(
+      updateBeerStyleUseCase.execute({
+        id: beerStyleId,
+        name: "Another beer style name",
+      })
+    ).rejects.toEqual(new AppError("This beer style name already exists!"));
   });
 });
