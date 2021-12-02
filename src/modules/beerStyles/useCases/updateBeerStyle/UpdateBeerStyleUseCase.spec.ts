@@ -33,4 +33,13 @@ describe("Update Beer Style Use Case", () => {
     expect(beerStyle.minimum_temperature).toBe(-10);
     expect(beerStyle.maximum_temperature).toBe(10);
   });
+
+  it("should not be able to update a non-existent beer style", async () => {
+    await expect(
+      updateBeerStyleUseCase.execute({
+        id: "non-existent-id",
+        minimum_temperature: 10,
+      })
+    ).rejects.toEqual(new AppError("This beer style doesn't exists!", 404));
+  });
 });
