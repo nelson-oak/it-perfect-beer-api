@@ -19,7 +19,7 @@ class FakeBeerStylesRepository implements IBeerStyleRepository {
 
   async findByName(name: string): Promise<BeerStyle> {
     return this.beerStyles.find(
-      (beerStyle) => name === beerStyle.name.toLowerCase()
+      (beerStyle) => name.toLowerCase() === beerStyle.name.toLowerCase()
     );
   }
 
