@@ -25,4 +25,10 @@ describe("Delete Beer Style", () => {
     // eslint-disable-next-line no-unused-expressions
     expect(deleteBeerStyleUseCase.execute(beerStyleId)).resolves;
   });
+
+  it("should not be able to delete a non-existent beer style", async () => {
+    expect(deleteBeerStyleUseCase.execute("non-existent-id")).rejects.toEqual(
+      new AppError("This beer style doesn't exists!", 404)
+    );
+  });
 });
