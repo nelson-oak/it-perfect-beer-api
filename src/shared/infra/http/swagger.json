@@ -1,0 +1,611 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Perfect Beer API",
+    "description": "API para cadastro de estilos de cerveja e consulta de recomendações",
+    "version": "1.0.0",
+    "contact": {
+      "email": "nelson.carvalho.13@outlook.com"
+    }
+  },
+  "paths": {
+    "/beer_styles": {
+      "post": {
+        "tags": ["Estilos de cerveja"],
+        "summary": "Cadastrar estilo de cerveja",
+        "description": "Cadastrar um novo estilo de cerveja",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "minimum_temperature": {
+                    "type": "number",
+                    "required": true
+                  },
+                  "maximum_temperature": {
+                    "type": "number",
+                    "required": true
+                  }
+                }
+              },
+              "example": {
+                "name": "some example",
+                "minimum_temperature": -5,
+                "maximum_temperature": 10
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Cadastro realizado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "b765ae09-012a-420e-96c2-ad5f0f0f9019"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "some example"
+                    },
+                    "minimum_temperature": {
+                      "type": "number",
+                      "example": -5
+                    },
+                    "maximum_temperature": {
+                      "type": "number",
+                      "example": 10
+                    },
+                    "created_at": {
+                      "type":  "string",
+                      "example": "2021-12-03T02:38:41.313Z"
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "example": "2021-12-03T02:38:41.313Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida (campos nulos, nome já cadastrado ou temperatura mínima maior que máxima)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Can't create a beer style with nullable name, minimum or maximum temperatures!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Estilos de cerveja"],
+        "summary": "Listar estilos de cerveja",
+        "description": "Listar todos os estilos de cerveja com possibilidade de filtro por nome",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Nome ou parte do nome do estilo de cerveja",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "beer"
+            }
+          }
+        ],
+        "responses":{
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "example": "b765ae09-012a-420e-96c2-ad5f0f0f9019"
+                      },
+                      "name": {
+                        "type": "string",
+                        "example": "some example"
+                      },
+                      "minimum_temperature": {
+                        "type": "number",
+                        "example": -5
+                      },
+                      "maximum_temperature": {
+                        "type": "number",
+                        "example": 10
+                      },
+                      "created_at": {
+                        "type":  "string",
+                        "example": "2021-12-03T02:38:41.313Z"
+                      },
+                      "updated_at": {
+                        "type": "string",
+                        "example": "2021-12-03T02:38:41.313Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/beer_styles/{id}": {
+      "get": {
+        "tags": ["Estilos de cerveja"],
+        "summary": "Detalhe de estilo de cerveja",
+        "description": "Exibir detalhes de um estilo de cerveja por ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "required": true,
+              "example": "b765ae09-012a-420e-96c2-ad5f0f0f9019"
+            },
+            "description": "Identificador tipo UUID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Dados encontrados",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "b765ae09-012a-420e-96c2-ad5f0f0f9019"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "some example"
+                    },
+                    "minimum_temperature": {
+                      "type": "number",
+                      "example": -5
+                    },
+                    "maximum_temperature": {
+                      "type": "number",
+                      "example": 10
+                    },
+                    "created_at": {
+                      "type":  "string",
+                      "example": "2021-12-03T02:38:41.313Z"
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "example": "2021-12-03T02:38:41.313Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "This beer style doesn't exists!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Estilos de cerveja"],
+        "summary": "Editar estilo de cerveja",
+        "description": "Editar dados de um estilo de cerveja",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "required": true,
+              "example": "b765ae09-012a-420e-96c2-ad5f0f0f9019"
+            },
+            "description": "Identificador tipo UUID"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "required": false
+                  },
+                  "minimum_temperature": {
+                    "type": "number",
+                    "required": false
+                  },
+                  "maximum_temperature": {
+                    "type": "number",
+                    "required": false
+                  }
+                }
+              },
+              "example": {
+                "name": "some example",
+                "minimum_temperature": -5,
+                "maximum_temperature": 10
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Dados atualizados",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "b765ae09-012a-420e-96c2-ad5f0f0f9019"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "some example"
+                    },
+                    "minimum_temperature": {
+                      "type": "number",
+                      "example": -5
+                    },
+                    "maximum_temperature": {
+                      "type": "number",
+                      "example": 10
+                    },
+                    "created_at": {
+                      "type":  "string",
+                      "example": "2021-12-03T02:38:41.313Z"
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "example": "2021-12-03T02:38:41.313Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida (nome já cadastrado ou temperatura mínima maior que máxima)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Can't create a beer style with nullable name, minimum or maximum temperatures!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "This beer style doesn't exists!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Estilos de cerveja"],
+        "summary": "Excluir estilo de cerveja",
+        "description": "Excluir um estilo de cerveja cadastrado",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "required": true,
+              "example": "b765ae09-012a-420e-96c2-ad5f0f0f9019"
+            },
+            "description": "Identificador tipo UUID"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Registro excluído"
+          },
+          "404": {
+            "description": "Não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "This beer style doesn't exists!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/beer_styles/import": {
+      "post": {
+        "tags": ["Estilos de cerveja"],
+        "summary": "Importar estilos de cerveja",
+        "description": "Importar estilos de cerveja a partir de CSV",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Registro excluído"
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/beer_styles/perfect": {
+      "post": {
+        "tags": ["Estilos de cerveja"],
+        "summary": "Exibir a cerveja perfeita",
+        "description": "Exibir a cerveja perfeita com temperatura mínima mais próxima da temperatura informada (desde que esta não seja inferior à mínima)",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "temperature":  {
+                    "type": "number",
+                    "example": -5,
+                    "required": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Dados encontrados",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "beerStyle": {
+                      "type": "string",
+                      "example": "some beer style"
+                    },
+                    "playlist": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "example": "some beer style playlist"
+                        },
+                        "tracks": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string",
+                                "example": "some music name"
+                              },
+                              "artist": {
+                                "type": "string",
+                                "example": "some music artist"
+                              },
+                              "url": {
+                                "type": "string",
+                                "example": "http://some.music.url/"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Perfect beer style doesn't found!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
