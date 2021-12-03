@@ -16,7 +16,7 @@ Teste solicitado pela empresa Be Growth.
 - [x] Retornar a cerveja ideal junto com uma playlist do Spotify, dada a temperatura
 - [x] Se houver mais de uma cerveja retornada, classificar por ordem alfabética
 - [x] Se não houver playlist do Spotify o status 204 na playlist
-- [x] Se não houver erro na consulta do Spotify o status deve ser 500
+- [x] Se houver erro na consulta do Spotify o status deve ser 500
 
 ## Iniciando o projeto
 
@@ -88,3 +88,42 @@ docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' per
 
 ## Rotas disponíveis
 
+Para informações detalhadas, executar a aplicação e abrir a URL *http://localhost:3333/api-docs*. Abaixo tem a tabela contendo todas as rotas, seus métodos e possíveis status de retorno.
+
+| Método | Rota | Possíveis status de retorno |
+| - | - | - |
+| POST | /beer_styles | 201, 400, 500 |
+| GET | /beer_styles | 200, 500 |
+| GET | /beer_styles/:id | 200, 404, 500 |
+| PUT | /beer_styles/:id | 200, 400, 404, 500 |
+| DELETE | /beer_styles | 200, 404, 500 |
+| POST | /beer_styles | 204, 500 |
+| POST | /beer_styles | 200, 404, 500 |
+
+## Conexão com Spotify
+
+As credenciais do Spotify podem ser obtidas através do link *https://developer.spotify.com/dashboard/*. É necessário efetuar login com uma conta Spotify e criar um projeto para obter o CLIENT e o SECRET IDs.
+
+Além do retorno padrão descrito na documentação da API, existem dois possíveis casos a serem retornados pela API do Spotify, descritos abaixo:
+
+1 Nenhuma playlist encontrada
+```json
+{
+  "beerStyle": "some beer style",
+  "playlist": {
+    "status": 204,
+    "message": "No playlist found!"
+  }
+}
+```
+
+2. Erro na consulta de dados: ocorre quando a API do Spotify retorna um status diferente de sucesso (200) na consulta
+```json
+{
+  "beerStyle": "some beer style",
+  "playlist": {
+    "status": 500,
+    "message": "Error on playlist search!",
+  }
+}
+```
