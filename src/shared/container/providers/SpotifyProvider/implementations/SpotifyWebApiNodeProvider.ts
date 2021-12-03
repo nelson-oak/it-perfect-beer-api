@@ -2,8 +2,6 @@ import axios from "axios";
 import qs from "qs";
 import SpotifyApi from "spotify-web-api-node";
 
-import { AppError } from "@shared/errors/AppError";
-
 import { ISpotifyProvider } from "../ISpotifyProvider";
 
 interface ITrack {
@@ -31,7 +29,9 @@ class SpotifyWebApiNodeProvider implements ISpotifyProvider {
       clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
     });
 
-    this.setAuth();
+    this.setAuth().catch((err: Error) => {
+      console.error({ type: "Spotify Auth Error", message: err.message });
+    });
   }
 
   async setAuth() {
@@ -49,17 +49,12 @@ class SpotifyWebApiNodeProvider implements ISpotifyProvider {
       grant_type: "client_credentials",
     };
 
-    try {
-      const response = await axios.post(
-        "https://accounts.spotify.com/api/token",
-        qs.stringify(data),
-        headers
-      );
-
-      this.spotifyApi.setAccessToken(response.data.access_token);
-    } catch (error) {
-      throw new AppError("Can't authenticate with spotify", 400);
-    }
+    const response = await axios.post(
+      "https://accounts.spotify.com/api/token",
+      qs.stringify(data),
+      headers
+    );
+    this.spotifyApi.setAccessToken(response.data.access_token);
   }
 
   async searchPlaylists(
@@ -87,7 +82,7 @@ class SpotifyWebApiNodeProvider implements ISpotifyProvider {
             tracks.push({
               name: track.name,
               artist: track.artists[0].name,
-              link: track.uri,
+              link: track.external_urls.spotify,
             })
           );
 
@@ -105,7 +100,7 @@ class SpotifyWebApiNodeProvider implements ISpotifyProvider {
 
     return {
       status: 500,
-      message: "Error while tried to connect with spotify!",
+      message: "Error on playlist search!",
     };
   }
 }

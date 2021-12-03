@@ -11,7 +11,7 @@ class ImportBeerStyleByCsvController {
       ImportBeerStyleByCsvUseCase
     );
 
-    await importBeerStyleByCsvUseCase.execute(file);
+    importBeerStyleByCsvUseCase.execute(file);
 
     return response.status(204).send();
   }
