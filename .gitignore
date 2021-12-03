@@ -4,3 +4,4 @@ build
 ormconfig.json
 coverage
 .env
+tmp/*

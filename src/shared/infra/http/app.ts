@@ -9,12 +9,15 @@ import express, { NextFunction, Request, Response } from "express";
 import { AppError } from "@shared/errors/AppError";
 import createConnection from "@shared/infra/typeorm";
 
+import { router } from "./routes";
+
 createConnection();
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(router);
 
 app.use(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
