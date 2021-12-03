@@ -1,4 +1,3 @@
-import { BeerStyle } from "@modules/beerStyles/infra/typeorm/entities/BeerStyle";
 import { IBeerStyleRepository } from "@modules/beerStyles/repositories/IBeerStylesRepository";
 import { inject, injectable } from "tsyringe";
 
@@ -24,7 +23,7 @@ class FindPerfectBeerStyleUseCase {
       await this.beerStylesRepository.findAllByTemperatureRange(temperature);
 
     if (perfectBeers.length === 0) {
-      throw new AppError("Perfect beer style doesn't found");
+      throw new AppError("Perfect beer style doesn't found!", 404);
     }
 
     let selectedBeerIdx = 0;
