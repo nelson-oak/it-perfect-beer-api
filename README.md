@@ -12,7 +12,7 @@ Teste solicitado pela empresa Be Growth.
 
 ## Funcionalidades
 
-- [ ] CRUD de estilos de cerveja (criar, listar, editar, excluir e importar via CSV)
+- [x] CRUD de estilos de cerveja (criar, listar, editar, excluir e importar via CSV)
 - [ ] Retornar a cerveja ideal junto com uma playlist do Spotify, dada a temperatura
 - [ ] Se houver mais de uma cerveja retornada, classificar por ordem alfabética
 - [ ] Se não houver playlist do Spotify o status 204 na playlist
@@ -68,12 +68,13 @@ docker exec -it perfect_beer_api /bin/bash
 ### Configurações adicionais
 
 - Variáveis ambiente: criar arquivo *.env* com o conteúdo de *.env.example*, para utilizar as variáveis ambientes do sistema, preenchendo todos os valores necessários
+- Keys do spotify disponíveis em https://developer.spotify.com/ (necessário efetuar login na plataforma para gerar)
 - Banco de dados: criar arquivo *ormconfig.json* com o conteúdo de *ormconfig.example.json* e configurar com os dados de usuário e senha do banco de dados
 - Se estiver usando o container do docker-compose, é necessário colocar o IP conforme o resultado do comando abaixo:
 ```bash
 docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' perfect_beer_postgres
 ```
-- No *docker-compose.yml* já tem um usuário e senha de banco de dados, caso sinta vontade, pode alterar para uma que preferir
+- No *docker-compose.yml* e *ormconfig.example.json* já tem um usuário e senha de banco de dados, caso sinta vontade, pode alterar para uma que preferir
 
 ## Recursos utilizados
 

@@ -2,6 +2,8 @@ import { BeerStylesRepository } from "@modules/beerStyles/infra/typeorm/reposito
 import { IBeerStyleRepository } from "@modules/beerStyles/repositories/IBeerStylesRepository";
 import { container } from "tsyringe";
 
+import "./providers";
+
 container.registerSingleton<IBeerStyleRepository>(
   "BeerStylesRepository",
   BeerStylesRepository

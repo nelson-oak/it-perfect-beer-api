@@ -6,7 +6,7 @@ interface IBeerStyleRepository {
   findAll(name?: string): Promise<BeerStyle[]>;
   findById(id: string): Promise<BeerStyle>;
   findByName(name: string): Promise<BeerStyle>;
-  filterByTemperatureRange(temperature: string): Promise<BeerStyle[]>;
+  findOneByTemperatureRange(temperature: number): Promise<BeerStyle>;
   create(data: ICreateBeerStyleDTO): Promise<BeerStyle>;
   update(data: IUpdateBeerStyleDTO): Promise<BeerStyle>;
   delete(id: string): Promise<void>;
