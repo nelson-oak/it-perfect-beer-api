@@ -87,12 +87,6 @@ class ImportBeerStyleByCsvUseCase {
         }
       }
     );
-
-    return {
-      created,
-      duplicate,
-      error,
-    };
   }
 }
 
