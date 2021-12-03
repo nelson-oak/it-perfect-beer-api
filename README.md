@@ -47,7 +47,7 @@ docker-compose up -d
 Abaixo tem uns comandos adicionais que podem ser úteis com Docker Compose
 
 ```bash
-# Parar execução e emover o container
+# Parar execução e remover o container
 docker-compose down
 
 # Parar execução (sem remover o container)
@@ -60,7 +60,7 @@ docker-compose start
 docker-compose restart
 
 # Verificar logs
-docker logs nome_container -f
+docker logs perfect_beer_api -f
 
 # Acessar container
 docker exec -it perfect_beer_api /bin/bash
@@ -82,9 +82,12 @@ docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' per
 - Express
 - Typescript
 - TDD com Jest
-- Docker e Docker Compose
+- Multer
+- Swagger
+- Tsyringe
 - Postgres
 - TypeORM
+- Docker e Docker Compose
 
 ## Rotas disponíveis
 
