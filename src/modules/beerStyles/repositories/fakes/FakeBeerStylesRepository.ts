@@ -23,7 +23,7 @@ class FakeBeerStylesRepository implements IBeerStyleRepository {
     );
   }
 
-  async findOneByTemperatureRange(temperature: number): Promise<BeerStyle> {
+  async findAllByTemperatureRange(temperature: number): Promise<BeerStyle[]> {
     const beerStyleFound = this.beerStyles
       .sort((a, b) => {
         if (a.name.toLowerCase() < b.name.toLowerCase()) {
@@ -35,7 +35,7 @@ class FakeBeerStylesRepository implements IBeerStyleRepository {
 
         return 0;
       })
-      .find(
+      .filter(
         (beerStyle) =>
           beerStyle.minimum_temperature <= temperature &&
           beerStyle.maximum_temperature >= temperature
