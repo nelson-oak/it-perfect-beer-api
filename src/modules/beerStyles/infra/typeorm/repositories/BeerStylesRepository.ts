@@ -32,8 +32,14 @@ class BeerStylesRepository implements IBeerStyleRepository {
     });
   }
 
-  async filterByTemperatureRange(temperature: string): Promise<BeerStyle[]> {
-    throw new Error("Method not implemented.");
+  async findOneByTemperatureRange(temperature: number): Promise<BeerStyle> {
+    return this.ormRepository.query(`
+      SELECT *
+      FROM beer_styles
+      WHERE minimum_temperature <= ${temperature}
+      AND maximum_temperature >= ${temperature}
+      ORDER BY name ASC
+    `);
   }
 
   async create({

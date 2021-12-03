@@ -23,8 +23,25 @@ class FakeBeerStylesRepository implements IBeerStyleRepository {
     );
   }
 
-  async filterByTemperatureRange(temperature: string): Promise<BeerStyle[]> {
-    throw new Error("Method not implemented.");
+  async findOneByTemperatureRange(temperature: number): Promise<BeerStyle> {
+    const beerStyleFound = this.beerStyles
+      .sort((a, b) => {
+        if (a.name.toLowerCase() < b.name.toLowerCase()) {
+          return -1;
+        }
+        if (a.name.toLowerCase() > b.name.toLowerCase()) {
+          return 1;
+        }
+
+        return 0;
+      })
+      .find(
+        (beerStyle) =>
+          beerStyle.minimum_temperature <= temperature &&
+          beerStyle.maximum_temperature >= temperature
+      );
+
+    return beerStyleFound;
   }
 
   async create({
