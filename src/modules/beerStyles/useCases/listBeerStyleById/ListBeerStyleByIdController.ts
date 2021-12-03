@@ -3,7 +3,7 @@ import { container } from "tsyringe";
 
 import { ListBeerStyleByIdUseCase } from "./ListBeerStyleByIdUseCase";
 
-class ListAllBeerStylesController {
+class ListBeerStyleByIdController {
   async handle(request: Request, response: Response) {
     const { id } = request.params;
 
@@ -17,4 +17,4 @@ class ListAllBeerStylesController {
   }
 }
 
-export { ListAllBeerStylesController };
+export { ListBeerStyleByIdController };

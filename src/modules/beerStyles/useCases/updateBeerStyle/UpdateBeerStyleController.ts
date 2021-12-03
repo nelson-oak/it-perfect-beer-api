@@ -3,7 +3,7 @@ import { container } from "tsyringe";
 
 import { UpdateBeerStyleUseCase } from "./UpdateBeerStyleUseCase";
 
-class ListAllBeerStylesController {
+class UpdateBeerStyleController {
   async handle(request: Request, response: Response) {
     const { id } = request.params;
     const { name, minimum_temperature, maximum_temperature } = request.body;
@@ -21,4 +21,4 @@ class ListAllBeerStylesController {
   }
 }
 
-export { ListAllBeerStylesController };
+export { UpdateBeerStyleController };
