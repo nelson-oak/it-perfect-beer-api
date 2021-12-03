@@ -1,4 +1,8 @@
+import axios from "axios";
+import qs from "qs";
 import SpotifyApi from "spotify-web-api-node";
+
+import { AppError } from "@shared/errors/AppError";
 
 import { ISpotifyProvider } from "../ISpotifyProvider";
 
@@ -20,11 +24,42 @@ interface IStatusCodeResponse {
 
 class SpotifyWebApiNodeProvider implements ISpotifyProvider {
   private spotifyApi: SpotifyApi;
+
   constructor() {
     this.spotifyApi = new SpotifyApi({
       clientId: process.env.SPOTIFY_CLIENT_ID,
       clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
     });
+
+    this.setAuth();
+  }
+
+  async setAuth() {
+    const headers = {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      auth: {
+        username: process.env.SPOTIFY_CLIENT_ID,
+        password: process.env.SPOTIFY_CLIENT_SECRET,
+      },
+    };
+    const data = {
+      grant_type: "client_credentials",
+    };
+
+    try {
+      const response = await axios.post(
+        "https://accounts.spotify.com/api/token",
+        qs.stringify(data),
+        headers
+      );
+
+      this.spotifyApi.setAccessToken(response.data.access_token);
+    } catch (error) {
+      throw new AppError("Can't authenticate with spotify", 400);
+    }
   }
 
   async searchPlaylists(

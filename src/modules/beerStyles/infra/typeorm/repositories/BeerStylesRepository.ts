@@ -36,13 +36,16 @@ class BeerStylesRepository implements IBeerStyleRepository {
   }
 
   async findOneByTemperatureRange(temperature: number): Promise<BeerStyle> {
-    return this.ormRepository.query(`
+    const filteredBeers = await this.ormRepository.query(`
       SELECT *
       FROM beer_styles
       WHERE minimum_temperature <= ${temperature}
       AND maximum_temperature >= ${temperature}
       ORDER BY name ASC
+      LIMIT 1
     `);
+
+    return filteredBeers[0];
   }
 
   async create({
