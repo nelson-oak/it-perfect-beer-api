@@ -27,12 +27,12 @@ beerStylesRoutes.get("/:id", listBeerStyleByIdController.handle);
 beerStylesRoutes.put("/:id", updateBeerStyleController.handle);
 beerStylesRoutes.delete("/:id", deleteBeerStyleController.handle);
 
-beerStylesRoutes.post("/import", importBeerStyleByCsvController.handle);
-
 beerStylesRoutes.post(
-  "/perfect",
+  "/import",
   upload.single("file"),
-  findPerfectBeerStyleController.handle
+  importBeerStyleByCsvController.handle
 );
+
+beerStylesRoutes.post("/perfect", findPerfectBeerStyleController.handle);
 
 export { beerStylesRoutes };

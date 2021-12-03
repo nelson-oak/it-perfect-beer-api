@@ -15,7 +15,10 @@ class BeerStylesRepository implements IBeerStyleRepository {
   async findAll(name = ""): Promise<BeerStyle[]> {
     return this.ormRepository.find({
       where: {
-        name: Raw((alias) => `LOWER(${alias}) Like '%${name.toLowerCase()}%'`),
+        name: Raw(
+          (alias) =>
+            `LOWER(${alias}) Like '%${name ? name.toLowerCase() : ""}%'`
+        ),
       },
     });
   }
@@ -32,14 +35,16 @@ class BeerStylesRepository implements IBeerStyleRepository {
     });
   }
 
-  async findOneByTemperatureRange(temperature: number): Promise<BeerStyle> {
-    return this.ormRepository.query(`
+  async findAllByTemperatureRange(temperature: number): Promise<BeerStyle[]> {
+    const filteredBeers = await this.ormRepository.query(`
       SELECT *
       FROM beer_styles
       WHERE minimum_temperature <= ${temperature}
       AND maximum_temperature >= ${temperature}
       ORDER BY name ASC
     `);
+
+    return filteredBeers;
   }
 
   async create({

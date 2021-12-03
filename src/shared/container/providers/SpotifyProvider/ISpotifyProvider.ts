@@ -13,6 +13,7 @@ interface IStatusCodeResponse {
 }
 
 interface ISpotifyProvider {
+  setAuth(): Promise<void>;
   searchPlaylists(
     filter: string
   ): Promise<IPlaylistsResponse | IStatusCodeResponse>;

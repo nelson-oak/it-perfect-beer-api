@@ -49,50 +49,29 @@ class ImportBeerStyleByCsvUseCase {
   async execute(file: Express.Multer.File) {
     const beerStyles = await this.loadBeerStyles(file);
 
-    const duplicate: string[] = [];
-    const created: string[] = [];
-    const error: string[] = [];
-
     beerStyles.map(
       async ({ name, minimum_temperature, maximum_temperature }) => {
         if (
-          !name ||
-          name.length === 0 ||
-          (!minimum_temperature && minimum_temperature !== 0) ||
-          (!maximum_temperature && maximum_temperature !== 0)
+          name.length > 0 &&
+          (minimum_temperature || minimum_temperature === 0) &&
+          (maximum_temperature || maximum_temperature === 0)
         ) {
-          if (!duplicate.includes(name)) {
-            error.push(name);
+          if (minimum_temperature <= maximum_temperature) {
+            const beerStyleExists = await this.beerStylesRepository.findByName(
+              name
+            );
+
+            if (!beerStyleExists) {
+              await this.beerStylesRepository.create({
+                name,
+                minimum_temperature,
+                maximum_temperature,
+              });
+            }
           }
-        }
-
-        if (minimum_temperature > maximum_temperature) {
-          error.push(name);
-        }
-
-        const beerStyleExists = await this.beerStylesRepository.findByName(
-          name
-        );
-
-        if (!beerStyleExists) {
-          await this.beerStylesRepository.create({
-            name,
-            minimum_temperature,
-            maximum_temperature,
-          });
-
-          created.push(name);
-        } else if (!duplicate.includes(name)) {
-          duplicate.push(name);
         }
       }
     );
-
-    return {
-      created,
-      duplicate,
-      error,
-    };
   }
 }
 

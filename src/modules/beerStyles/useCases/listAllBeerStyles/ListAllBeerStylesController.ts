@@ -12,7 +12,7 @@ class ListAllBeerStylesController {
     );
 
     const beerStyle = await listAllBeerStylesUseCase.execute({
-      name: String(name),
+      name: name as string,
     });
 
     return response.json(beerStyle);
