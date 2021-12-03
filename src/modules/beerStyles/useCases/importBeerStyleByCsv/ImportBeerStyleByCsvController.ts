@@ -13,7 +13,7 @@ class ImportBeerStyleByCsvController {
 
     const beerStyle = await importBeerStyleByCsvUseCase.execute(file);
 
-    return response.status(204);
+    return response.status(204).send();
   }
 }
 
