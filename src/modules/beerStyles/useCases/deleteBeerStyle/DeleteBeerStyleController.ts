@@ -9,9 +9,9 @@ class DeleteBeerStyleController {
 
     const deleteBeerStyleUseCase = container.resolve(DeleteBeerStyleUseCase);
 
-    const beerStyle = await deleteBeerStyleUseCase.execute(id);
+    await deleteBeerStyleUseCase.execute(id);
 
-    return response.json(beerStyle);
+    return response.status(204).send();
   }
 }
 
