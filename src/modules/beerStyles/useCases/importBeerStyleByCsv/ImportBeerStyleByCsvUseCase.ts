@@ -1,3 +1,4 @@
+import { BeerStyle } from "@modules/beerStyles/infra/typeorm/entities/BeerStyle";
 import { IBeerStyleRepository } from "@modules/beerStyles/repositories/IBeerStylesRepository";
 import { parse } from "csv-parse";
 import fs from "fs";
@@ -7,6 +8,10 @@ interface IBeerStyle {
   name: string;
   minimum_temperature: number;
   maximum_temperature: number;
+}
+
+interface IWarning {
+  message: string;
 }
 
 @injectable()
@@ -31,9 +36,9 @@ class ImportBeerStyleByCsvUseCase {
           const [name, minimum_temperature, maximum_temperature] = line;
 
           beerStyles.push({
-            name,
-            minimum_temperature,
-            maximum_temperature,
+            name: name as string,
+            minimum_temperature: Number(minimum_temperature),
+            maximum_temperature: Number(maximum_temperature),
           });
         })
         .on("end", () => {
@@ -49,29 +54,42 @@ class ImportBeerStyleByCsvUseCase {
   async execute(file: Express.Multer.File) {
     const beerStyles = await this.loadBeerStyles(file);
 
-    beerStyles.map(
-      async ({ name, minimum_temperature, maximum_temperature }) => {
+    const beerStylesToCreate: Promise<BeerStyle | IWarning>[] = beerStyles.map(
+      ({ name, minimum_temperature, maximum_temperature }, idx) => {
         if (
           name.length > 0 &&
-          (minimum_temperature || minimum_temperature === 0) &&
-          (maximum_temperature || maximum_temperature === 0)
+          Number.isInteger(minimum_temperature) &&
+          Number.isInteger(maximum_temperature)
         ) {
           if (minimum_temperature <= maximum_temperature) {
-            const beerStyleExists = await this.beerStylesRepository.findByName(
-              name
-            );
-
-            if (!beerStyleExists) {
-              await this.beerStylesRepository.create({
-                name,
-                minimum_temperature,
-                maximum_temperature,
+            const beerStyleCreatePromises = this.beerStylesRepository
+              .findByName(name)
+              .then((beerStyleExists): Promise<BeerStyle | IWarning> => {
+                if (!beerStyleExists) {
+                  return this.beerStylesRepository.create({
+                    name,
+                    minimum_temperature,
+                    maximum_temperature,
+                  });
+                }
+                return Promise.resolve({
+                  message: `Duplicate at line ${idx + 1}`,
+                });
               });
-            }
+
+            return beerStyleCreatePromises;
           }
         }
+
+        return new Promise(() => {
+          Promise.resolve({
+            message: `Validation error at line ${idx + 1}`,
+          });
+        });
       }
     );
+
+    await Promise.all<BeerStyle | IWarning>(beerStylesToCreate);
   }
 }
 
