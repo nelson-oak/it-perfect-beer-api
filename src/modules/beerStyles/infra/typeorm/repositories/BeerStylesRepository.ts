@@ -15,7 +15,10 @@ class BeerStylesRepository implements IBeerStyleRepository {
   async findAll(name = ""): Promise<BeerStyle[]> {
     return this.ormRepository.find({
       where: {
-        name: Raw((alias) => `LOWER(${alias}) Like '%${name.toLowerCase()}%'`),
+        name: Raw(
+          (alias) =>
+            `LOWER(${alias}) Like '%${name ? name.toLowerCase() : ""}%'`
+        ),
       },
     });
   }
