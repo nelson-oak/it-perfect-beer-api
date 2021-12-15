@@ -125,7 +125,7 @@
             "required": false,
             "schema": {
               "type": "string",
-              "example": "beer"
+              "example": ""
             }
           }
         ],
@@ -199,8 +199,7 @@
             "name": "id",
             "schema": {
               "type": "string",
-              "required": true,
-              "example": "b765ae09-012a-420e-96c2-ad5f0f0f9019"
+              "required": true
             },
             "description": "Identificador tipo UUID"
           }
@@ -286,8 +285,7 @@
             "name": "id",
             "schema": {
               "type": "string",
-              "required": true,
-              "example": "b765ae09-012a-420e-96c2-ad5f0f0f9019"
+              "required": true
             },
             "description": "Identificador tipo UUID"
           }
@@ -417,8 +415,7 @@
             "name": "id",
             "schema": {
               "type": "string",
-              "required": true,
-              "example": "b765ae09-012a-420e-96c2-ad5f0f0f9019"
+              "required": true
             },
             "description": "Identificador tipo UUID"
           }

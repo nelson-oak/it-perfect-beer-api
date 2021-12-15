@@ -71,7 +71,7 @@ docker exec -it perfect_beer_api /bin/bash
 - Variáveis ambiente: criar arquivo *.env* com o conteúdo de *.env.example*, para utilizar as variáveis ambientes do sistema, preenchendo todos os valores necessários
 - Keys do spotify disponíveis em https://developer.spotify.com/ (necessário efetuar login na plataforma para gerar)
 - Banco de dados: criar arquivo *ormconfig.json* com o conteúdo de *ormconfig.example.json* e configurar com os dados de usuário e senha do banco de dados
-- Se estiver usando o container do docker-compose, é necessário colocar o IP conforme o resultado do comando abaixo:
+- Se estiver usando o container do docker-compose, é necessário colocar o IP do container do banco de dados no ormconfig (no lugar do localhost), conforme o resultado do comando abaixo:
 ```bash
 docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' perfect_beer_postgres
 ```
